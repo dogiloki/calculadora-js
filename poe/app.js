@@ -10,9 +10,44 @@ var operadores=[
 	{value:"_",prioridad:null}
 ];
 
-function generarCalculadora(){
-	
+function asignarEventos(){
+	this.content_calculadora.childNodes.forEach((btn)=>{
+		if(Number(btn.innerHTML) || btn.innerHTML=="0"){
+			btn.addEventListener("click",()=>{
+				this.content_operacion.value+=btn.innerHTML;
+				
+			});
+		}else
+		if(btn.innerHTML=="AC"){
+			btn.addEventListener("click",()=>{
+				this.content_operacion.value="";
+				
+				this.content_resultado.value="";
+			});
+		}else
+		if(btn.innerHTML=="DEL"){
+			btn.addEventListener("click",()=>{
+				this.content_operacion.value=this.content_operacion.value.substring(0,this.content_operacion.value.length-1);
+				
+			});
+		}else
+		if(btn.innerHTML=="Ans"){
+			btn.addEventListener("click",()=>{
+				this.content_operacion.value=this.content_resultado.value;
+				
+			});
+		}
+		switch(btn.innerHTML){
+			case "/": case "x": case "+": case "-": case ".":
+				btn.addEventListener("click",()=>{
+					this.content_operacion.value+=btn.innerHTML;
+					
+				});
+			break;
+		}
+	});
 }
+asignarEventos();
 
 function prioridadJerarquia(texto=""){
 	for(let a=0; a<this.operadores.length; a++){
@@ -50,7 +85,6 @@ function procedimiento(texto){
 	let fin=encontrarFin(texto,posi+1);
 	let sub_resultado=texto.substring(inicio==0?0:inicio+1,fin);
 	let sub_operador=texto.replace(sub_resultado,resultado(sub_resultado));
-	console.log(sub_operador);
 	if(encontrarOperador(sub_operador,this.hayPrioridad()?this.prioridadJerarquia(sub_operador):null)==sub_operador.length){
 		this.content_resultado.value=((sub_operador??"NaN")=="NaN")?"Error de sintaxis":sub_operador;
 		return;
@@ -130,6 +164,7 @@ function calcular(){
 	let texto=this.content_operacion.value.replaceAll(" ","");
 	texto=validadEntrada(texto)??"";
 	texto=(texto.substring(0,1)==this.operadores[3].value)?texto.replace(this.operadores[3].value,"-"):texto;
+	texto=texto.replaceAll("x","*");
 	if(texto==""){
 		this.content_resultado.value="";
 	}else{
