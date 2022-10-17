@@ -4,3 +4,31 @@
 	box-sizing: border-box;
 	font-family: arial;
 }
+
+.content-calculadora{
+	width: 40vw;
+}
+.content-calculadora .btn, .caja{
+	min-width: 50px;
+	height: 40px;
+	width: 8vw;
+	float: left;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	background: #f5f5f5;
+	border: 1px solid #c2c2c2;
+	padding: 10px;
+	margin: 5px;
+	font-size: 20px;
+}
+.caja{
+	width: 16vw;
+	padding: 20px;
+	border: 2px solid #c2c2c2;
+	margin: 10px;
+}
+.btn:hover{
+	background: #b6b6b6;
+}
